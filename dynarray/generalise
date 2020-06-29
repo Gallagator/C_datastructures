@@ -1,0 +1,46 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+sub fill_template
+{
+    my $filename = shift;
+    my $save_as = shift;
+    my @args = @_;
+    open(my $tmpl_file, '<', $filename);
+    open(my $filled_file, '>', $save_as); 
+    while(<$tmpl_file>)
+    {
+        s/<(\d+)>/$args[$1]/g;
+        print $filled_file "$_";
+    }  
+     
+    close($filled_file);
+    close($tmpl_file);
+}
+
+sub main
+{
+    my @args;
+
+    print "Name dynamic array\n";
+    $args[0] = <STDIN>;
+    print "Data type the array will hold:\n";
+    $args[1] = <STDIN>;
+    print "Name the structure for main.c ---Maybe something similar to (but not the same as) the name of the dynammic array:\n";
+    $args[2] = <STDIN>;
+    print "Name the module:\n";
+    $args[3] = <STDIN>;
+
+    chomp @args;
+
+    mkdir("$args[3]") || die $!;
+    fill_template("dynarraytmpl.c", $args[3] . "/" . $args[3] . ".c", @args);
+    fill_template("dynarraytmpl.h", $args[3] . "/" . $args[3] . ".h", @args);
+    fill_template("Makefiletmpl", $args[3] . "/Makefile", @args);
+}
+
+
+main
+

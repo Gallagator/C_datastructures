@@ -21,3 +21,7 @@ License along with this library; if not, see <https://www.gnu.org/licenses/>.
 These are my Datastrucures I will be adding more of them as I go allong with C programming.
 I hope these help anyone out. Let me know if there are any faults with any of the datastructures.
 Check the README of the datastructure to see if it is safe (bug free and memory leak free).
+
+dynarray:
+    An easy to use resizable array. It is similar to a C++ vector.
+   

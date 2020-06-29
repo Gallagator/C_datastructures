@@ -1,0 +1,36 @@
+#!/usr/bin/perl
+
+sub write_random_array
+{
+    $tmplfilename = shift;
+    my $lower_bound = shift;
+    my $upper_bound = shift;
+    open(my $tmplfile, '<', $tmplfilename);
+    while(<$tmplfile>)
+    {
+        s/!(\d+)!/rand_str_array($1, $lower_bound, $upper_bound)/ge;
+        print $_;        
+    }
+    close($tmplfile);
+}
+
+sub rand_str_array
+{
+    my $n = shift;
+    my $lower_bound = shift;
+    my $upper_bound = shift;
+    my $str = "[";
+    for(my $i = 0; $i < $n; $i++)
+    {
+        $str = $str . (int(rand($upper_bound - $lower_bound)) + $lower_bound);
+        if($i != $n - 1)
+        {
+            $str = $str . ", ";
+        } 
+    }
+
+    my $str = $str . "]";
+    return ($str);
+}
+
+write_random_array ("del.c", -10, 19)

@@ -1,4 +1,4 @@
-#include "dynarray.h"
+#include "dynarrayChar.h"
 
 #include <malloc.h>
 #include <stdbool.h>
@@ -12,14 +12,14 @@ struct dynarrayChar
 };
 
 
-bool dynarrayChar_append(DynarrayChar *darr, char val)
+bool DynarrayChar_append(DynarrayChar *darr, char val)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
     assert(dynarray != NULL);
-    return dynarrayChar_insert(darr, val, dynarray->length);
+    return DynarrayChar_insert(darr, val, dynarray->length);
 }
 
-DynarrayChar dynarrayChar_create(size_t length)
+DynarrayChar DynarrayChar_create(size_t length)
 {
     struct dynarrayChar *dynarray = malloc(sizeof(struct dynarrayChar) + sizeof(char) * (length - 1));
     if(dynarray == NULL)
@@ -30,12 +30,12 @@ DynarrayChar dynarrayChar_create(size_t length)
     return dynarray;
 }
 
-void dynarrayChar_destroy(DynarrayChar dynarray)
+void DynarrayChar_destroy(DynarrayChar dynarray)
 {
     free(dynarray);
 }
 
-bool dynarrayChar_insert(DynarrayChar *darr, char val, size_t index)
+bool DynarrayChar_insert(DynarrayChar *darr, char val, size_t index)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
     assert(dynarray != NULL && index <= dynarray->length);
@@ -60,14 +60,14 @@ bool dynarrayChar_insert(DynarrayChar *darr, char val, size_t index)
     return true;
 }
 
-size_t dynarrayChar_length(DynarrayChar darr)
+size_t DynarrayChar_length(DynarrayChar darr)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
     assert(dynarray != NULL); 
     return dynarray->length;
 }
 
-size_t dynarrayChar_size(DynarrayChar darr)
+size_t DynarrayChar_size(DynarrayChar darr)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
     assert(dynarray != NULL); 
@@ -75,7 +75,7 @@ size_t dynarrayChar_size(DynarrayChar darr)
 }
 
 
-bool dynarrayChar_resize(DynarrayChar *darr, size_t size)
+bool DynarrayChar_resize(DynarrayChar *darr, size_t size)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
     assert(dynarray != NULL); 
@@ -90,33 +90,33 @@ bool dynarrayChar_resize(DynarrayChar *darr, size_t size)
     return true;
 }
 
-char *dynarrayChar_arr(DynarrayChar darr)
+char *DynarrayChar_arr(DynarrayChar darr)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
     assert(dynarray != NULL);   
     return dynarray->arr;
 }
 
-char dynarrayChar_get(DynarrayChar darr, size_t index)
+char DynarrayChar_get(DynarrayChar darr, size_t index)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     return dynarray->arr[index];
 }
 
-void dynarrayChar_set(DynarrayChar darr, size_t index, char val)
+void DynarrayChar_set(DynarrayChar darr, size_t index, char val)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     dynarray->arr[index] = val;
 }
 
-bool dynarrayChar_adjust_length(DynarrayChar *darr, size_t length)
+bool DynarrayChar_adjust_length(DynarrayChar *darr, size_t length)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
     if(length > dynarray->size)
     {
-        if(!dynarrayChar_resize(darr, length))
+        if(!DynarrayChar_resize(darr, length))
         {
             return false;
         }
@@ -126,12 +126,12 @@ bool dynarrayChar_adjust_length(DynarrayChar *darr, size_t length)
     return true;
 }
 
-bool dynarrayChar_insert_array(DynarrayChar *darr, size_t start_index, char *arr, size_t arr_length)
+bool DynarrayChar_insert_array(DynarrayChar *darr, size_t start_index, char *arr, size_t arr_length)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
     assert(dynarray != NULL && start_index <= dynarray->length);
     size_t old_length = dynarray->length; 
-    if(!dynarrayChar_adjust_length(darr, dynarray->length + arr_length))
+    if(!DynarrayChar_adjust_length(darr, dynarray->length + arr_length))
         return false;
 
     dynarray = (struct dynarrayChar *) *darr;
@@ -148,28 +148,28 @@ bool dynarrayChar_insert_array(DynarrayChar *darr, size_t start_index, char *arr
     return true;
 }
 
-bool dynarrayChar_append_array(DynarrayChar *darr, char *arr, size_t arr_length)
+bool DynarrayChar_append_array(DynarrayChar *darr, char *arr, size_t arr_length)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
     assert(dynarray != NULL);
-    return dynarrayChar_insert_array(darr, dynarray->length, arr, arr_length);     
+    return DynarrayChar_insert_array(darr, dynarray->length, arr, arr_length);     
 }
 
-bool dynarrayChar_insert_dynarray(DynarrayChar *dest, size_t start_index, DynarrayChar src)
+bool DynarrayChar_insert_dynarray(DynarrayChar *dest, size_t start_index, DynarrayChar src)
 {
     struct dynarrayChar *dynarray_src = (struct dynarrayChar *) src;
     assert(dynarray_src != NULL);
-    return dynarrayChar_insert_array(dest, start_index, dynarray_src->arr, dynarray_src->length); 
+    return DynarrayChar_insert_array(dest, start_index, dynarray_src->arr, dynarray_src->length); 
 }
 
-bool dynarrayChar_append_dynarray(DynarrayChar *dest, DynarrayChar src)
+bool DynarrayChar_append_dynarray(DynarrayChar *dest, DynarrayChar src)
 {
     struct dynarrayChar *dynarray_src = (struct dynarrayChar *) src;
     assert(dynarray_src != NULL);
-    return dynarrayChar_append_array(dest, dynarray_src->arr, dynarray_src->length); 
+    return DynarrayChar_append_array(dest, dynarray_src->arr, dynarray_src->length); 
 }
 
-void dynarrayChar_remove(DynarrayChar darr, size_t index)
+void DynarrayChar_remove(DynarrayChar darr, size_t index)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
     assert(dynarray != NULL && index < dynarray->length);
@@ -178,7 +178,7 @@ void dynarrayChar_remove(DynarrayChar darr, size_t index)
     dynarray->length--;    
 }
 
-void dynarrayChar_remove_slice(DynarrayChar darr, size_t start, size_t end)
+void DynarrayChar_remove_slice(DynarrayChar darr, size_t start, size_t end)
 {
     struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
     assert(dynarray != NULL && start < dynarray->length &&
