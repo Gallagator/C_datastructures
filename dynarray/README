@@ -1,0 +1,36 @@
+This module contains code to create a resizable array of any type.
+You simply need to run the perl generalise script by typing:
+./generalise
+It should walk you through the process of making your own dynamicaly resized array
+and example of the script is as follows:
+
+>./generalise
+Name dynamic array                                                                                                                                                                          
+>DynarrayUint8_t                                                                                                                                                     
+Data type the array will hold:                                                                                                                                                             
+>uint8_t                                                                                                                                                                                    
+Name the structure for main.c ---Maybe something similar to (but not the same as) the name of the dynammic array:                                                                  
+>dynarray_uint8_t                                                                                                                                                                      
+Name the module:                                                                                                                                                                          
+>dynarrayu8    
+
+This will create a module called "dynarrayu8" in its own folder with C files of the same name.
+
+The data type that will be defined in the .h file will be "DynarrayUint8_t" and it will hold
+a resizable array containing uint8_ts.
+
+The structure used to represent this datatype will be called "dynarray_uint8_t"
+
+A simple Makefile will be generated to compile the module
+NOTE: uint8_t is not in the base C language. To make this example module compile you will have to
+include <stdint.h> in the .c and/or .h file produced.
+
+I have made an automated testsuit for the module dynarrayChar.
+to use it run "make test". if you want to run valgrind on the executable type:
+"make test-full"
+
+It is up to you to write automated testsuites for the code produced by this module.
+
+I hope this is educational! Have fun!
+
+(PS you can have a resizeable array of void * if you want this data structure to work for many types.)
