@@ -1,3 +1,6 @@
+-----------------------------------------------------------
+THIS IS FOR DYNAMIC ARRAYS THAT DON'T USE GENERIC DYNARRAYS
+
 This module contains code to create a resizable array of any type.
 You simply need to run the perl generalise script by typing:
 ./generalise
@@ -34,3 +37,26 @@ It is up to you to write automated testsuites for the code produced by this modu
 I hope this is educational! Have fun!
 
 (PS you can have a resizeable array of void * if you want this data structure to work for many types.)
+
+--------------------------------------------------------------
+FOR DYNARRAYS THAT USE GENERIC DYNARRAYS 
+
+As mentioned above you can use void * to store any type. What if you want to avoid all that type casting?
+Well I made a separate module called "with_wrapper" which makes all of the wrapper functions that you
+would need for this.
+
+This means you  don't need to create multiple dynamic arrays which effectively just store a pointer to something.
+You can have multiple dynarrays which use the same code for a void * dynarray.
+
+For example lets say you want a dynarray which stores dynarrayInts (dynamic array of ints) with the above method
+this will make a dynarray containing dynarrayInts which are really just void * under the hood.
+then you may make a dynarray which holds DynarrayDoubles which again makes a dynarray containing void pointers.
+This creates unnecessary duplication.
+
+Instead, This method will use the same dynarray void * code for each of the dynarrays.
+
+
+
+
+
+
