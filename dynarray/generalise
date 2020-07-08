@@ -32,7 +32,8 @@ sub main
     $args[2] = <STDIN>;
     print "Name the module:\n";
     $args[3] = <STDIN>;
-
+    # upper case needed for macros
+    $args[4] = uc $args[3];
     chomp @args;
 
     mkdir("$args[3]") || die $!;

@@ -41,12 +41,12 @@ bool <0>_insert(<0> *darr, <1> val, size_t index)
     assert(dynarray != NULL && index <= dynarray->length);
     if(dynarray->length + 1 > dynarray->size) 
     {
-        struct <2> *realloced_dynarray = (struct <2> *) realloc(dynarray, sizeof(struct <2>) + dynarray->size * DYNARRAY_REALLOC_FACTOR * sizeof(<1>));
+        struct <2> *realloced_dynarray = (struct <2> *) realloc(dynarray, sizeof(struct <2>) + dynarray->size * <4>_REALLOC_FACTOR * sizeof(<1>));
         if(realloced_dynarray == NULL)
             return false;
 
         dynarray = realloced_dynarray;
-        dynarray->size *= DYNARRAY_REALLOC_FACTOR;
+        dynarray->size *= <4>_REALLOC_FACTOR;
         *darr = (void *) dynarray;
     } 
     size_t curr = dynarray->length;

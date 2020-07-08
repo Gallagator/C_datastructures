@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <assert.h>
 
-struct dynarrayChar
+struct _DynarrayChar
 {
     size_t length;
     size_t size;
@@ -14,14 +14,14 @@ struct dynarrayChar
 
 bool DynarrayChar_append(DynarrayChar *darr, char val)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL);
     return DynarrayChar_insert(darr, val, dynarray->length);
 }
 
 DynarrayChar DynarrayChar_create(size_t length)
 {
-    struct dynarrayChar *dynarray = malloc(sizeof(struct dynarrayChar) + sizeof(char) * (length - 1));
+    struct _DynarrayChar *dynarray = malloc(sizeof(struct _DynarrayChar) + sizeof(char) * (length - 1));
     if(dynarray == NULL)
         return NULL;
 
@@ -37,16 +37,16 @@ void DynarrayChar_destroy(DynarrayChar dynarray)
 
 bool DynarrayChar_insert(DynarrayChar *darr, char val, size_t index)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL && index <= dynarray->length);
     if(dynarray->length + 1 > dynarray->size) 
     {
-        struct dynarrayChar *realloced_dynarray = (struct dynarrayChar *) realloc(dynarray, sizeof(struct dynarrayChar) + dynarray->size * DYNARRAY_REALLOC_FACTOR * sizeof(char));
+        struct _DynarrayChar *realloced_dynarray = (struct _DynarrayChar *) realloc(dynarray, sizeof(struct _DynarrayChar) + dynarray->size * DYNARRAYCHAR_REALLOC_FACTOR * sizeof(char));
         if(realloced_dynarray == NULL)
             return false;
 
         dynarray = realloced_dynarray;
-        dynarray->size *= DYNARRAY_REALLOC_FACTOR;
+        dynarray->size *= DYNARRAYCHAR_REALLOC_FACTOR;
         *darr = (void *) dynarray;
     } 
     size_t curr = dynarray->length;
@@ -62,14 +62,14 @@ bool DynarrayChar_insert(DynarrayChar *darr, char val, size_t index)
 
 size_t DynarrayChar_length(DynarrayChar darr)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL); 
     return dynarray->length;
 }
 
 size_t DynarrayChar_size(DynarrayChar darr)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL); 
     return dynarray->size;
 }
@@ -77,9 +77,9 @@ size_t DynarrayChar_size(DynarrayChar darr)
 
 bool DynarrayChar_resize(DynarrayChar *darr, size_t size)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL); 
-    struct dynarrayChar *realloced_dynarray = (struct dynarrayChar *) realloc(dynarray, sizeof(struct dynarrayChar) + size * sizeof(char));
+    struct _DynarrayChar *realloced_dynarray = (struct _DynarrayChar *) realloc(dynarray, sizeof(struct _DynarrayChar) + size * sizeof(char));
     if(realloced_dynarray == NULL)
         return false;
 
@@ -92,35 +92,35 @@ bool DynarrayChar_resize(DynarrayChar *darr, size_t size)
 
 char *DynarrayChar_arr(DynarrayChar darr)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL);   
     return dynarray->arr;
 }
 
 char DynarrayChar_get(DynarrayChar darr, size_t index)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     return dynarray->arr[index];
 }
 
 void DynarrayChar_set(DynarrayChar darr, size_t index, char val)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     dynarray->arr[index] = val;
 }
 
 bool DynarrayChar_adjust_length(DynarrayChar *darr, size_t length)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     if(length > dynarray->size)
     {
         if(!DynarrayChar_resize(darr, length))
         {
             return false;
         }
-        dynarray = (struct dynarrayChar *) *darr;
+        dynarray = (struct _DynarrayChar *) *darr;
     }
     dynarray->length = length;
     return true;
@@ -128,13 +128,13 @@ bool DynarrayChar_adjust_length(DynarrayChar *darr, size_t length)
 
 bool DynarrayChar_insert_array(DynarrayChar *darr, size_t start_index, char *arr, size_t arr_length)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL && start_index <= dynarray->length);
     size_t old_length = dynarray->length; 
     if(!DynarrayChar_adjust_length(darr, dynarray->length + arr_length))
         return false;
 
-    dynarray = (struct dynarrayChar *) *darr;
+    dynarray = (struct _DynarrayChar *) *darr;
     size_t i = old_length;
     while(i > start_index)
     {
@@ -150,28 +150,28 @@ bool DynarrayChar_insert_array(DynarrayChar *darr, size_t start_index, char *arr
 
 bool DynarrayChar_append_array(DynarrayChar *darr, char *arr, size_t arr_length)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) *darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL);
     return DynarrayChar_insert_array(darr, dynarray->length, arr, arr_length);     
 }
 
 bool DynarrayChar_insert_dynarray(DynarrayChar *dest, size_t start_index, DynarrayChar src)
 {
-    struct dynarrayChar *dynarray_src = (struct dynarrayChar *) src;
+    struct _DynarrayChar *dynarray_src = (struct _DynarrayChar *) src;
     assert(dynarray_src != NULL);
     return DynarrayChar_insert_array(dest, start_index, dynarray_src->arr, dynarray_src->length); 
 }
 
 bool DynarrayChar_append_dynarray(DynarrayChar *dest, DynarrayChar src)
 {
-    struct dynarrayChar *dynarray_src = (struct dynarrayChar *) src;
+    struct _DynarrayChar *dynarray_src = (struct _DynarrayChar *) src;
     assert(dynarray_src != NULL);
     return DynarrayChar_append_array(dest, dynarray_src->arr, dynarray_src->length); 
 }
 
 void DynarrayChar_remove(DynarrayChar darr, size_t index)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL && index < dynarray->length);
     for(size_t i = index; i < dynarray->length - 1; i++)
         dynarray->arr[i] = dynarray->arr[i + 1];
@@ -180,7 +180,7 @@ void DynarrayChar_remove(DynarrayChar darr, size_t index)
 
 void DynarrayChar_remove_slice(DynarrayChar darr, size_t start, size_t end)
 {
-    struct dynarrayChar *dynarray = (struct dynarrayChar *) darr;
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL && start < dynarray->length &&
             end <= dynarray->length && end > start);
     size_t slice_size = end - start;

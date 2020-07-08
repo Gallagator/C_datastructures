@@ -1,8 +1,8 @@
-#ifndef DYNARRAY_H
-#define DYNARRAY_H
+#ifndef <4>_H
+#define <4>_H
 
-#ifndef DYNARRAY_REALLOC_FACTOR
-#define DYNARRAY_REALLOC_FACTOR 2
+#ifndef <4>_REALLOC_FACTOR
+#define <4>_REALLOC_FACTOR 2
 #endif
 
 #include <stdbool.h>
