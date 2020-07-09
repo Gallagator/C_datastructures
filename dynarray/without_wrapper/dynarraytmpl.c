@@ -191,3 +191,14 @@ void <0>_remove_slice(<0> darr, size_t start, size_t end)
     }
     dynarray->length = i;
 }
+
+void <0>_foreach(<0> darr, foreach_fp fp)
+{
+    struct <2> *dynarray = (struct <2> *) darr;
+    assert(dynarray != NULL);  
+    <1> *arr = dynarray->arr;
+    for(size_t i = 0; i < dynarray->length; i++)
+    {
+        fp(arr[i]);
+    }
+}

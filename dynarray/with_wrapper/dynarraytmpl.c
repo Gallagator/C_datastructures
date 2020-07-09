@@ -70,3 +70,8 @@ void <0>_remove_slice(<0> darr, size_t start, size_t end)
 {
     <2>_remove_slice( (<2>) darr, start, end);
 }
+void <0>_foreach(<0> darr, foreach_fp fp)
+{
+    <2>_foreach( (<2>) darr, fp);
+}
+
