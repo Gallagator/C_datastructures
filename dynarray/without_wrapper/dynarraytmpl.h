@@ -45,7 +45,7 @@ void <0>_remove(<0> darr, size_t index);
 // removes slice of array. it removes elements from start up to but not including end 
 void <0>_remove_slice(<0> darr, size_t start, size_t end);
 // executes fp on each element up to the length of the dynarray
-typedef void (*foreach_fp)(<2> element);
+typedef void (*foreach_fp)(<1> element);
 void <0>_foreach(<0> darr, foreach_fp fp);
 
 #endif
