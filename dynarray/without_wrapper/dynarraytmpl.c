@@ -12,14 +12,14 @@ struct <2>
 };
 
 
-bool <0>_append(<0> *darr, <1> val)
+bool <0>_append(<0> **darr, <1> val)
 {
     struct <2> *dynarray = (struct <2> *) *darr;
     assert(dynarray != NULL);
     return <0>_insert(darr, val, dynarray->length);
 }
 
-<0> <0>_create(size_t length)
+<0> *<0>_create(size_t length)
 {
     struct <2> *dynarray = malloc(sizeof(struct <2>) + sizeof(<1>) * (length - 1));
     if(dynarray == NULL)
@@ -30,12 +30,12 @@ bool <0>_append(<0> *darr, <1> val)
     return dynarray;
 }
 
-void <0>_destroy(<0> dynarray)
+void <0>_destroy(<0> *dynarray)
 {
     free(dynarray);
 }
 
-bool <0>_insert(<0> *darr, <1> val, size_t index)
+bool <0>_insert(<0> **darr, <1> val, size_t index)
 {
     struct <2> *dynarray = (struct <2> *) *darr;
     assert(dynarray != NULL && index <= dynarray->length);
@@ -60,14 +60,14 @@ bool <0>_insert(<0> *darr, <1> val, size_t index)
     return true;
 }
 
-size_t <0>_length(<0> darr)
+size_t <0>_length(<0> *darr)
 {
     struct <2> *dynarray = (struct <2> *) darr;
     assert(dynarray != NULL); 
     return dynarray->length;
 }
 
-size_t <0>_size(<0> darr)
+size_t <0>_size(<0> *darr)
 {
     struct <2> *dynarray = (struct <2> *) darr;
     assert(dynarray != NULL); 
@@ -75,7 +75,7 @@ size_t <0>_size(<0> darr)
 }
 
 
-bool <0>_resize(<0> *darr, size_t size)
+bool <0>_resize(<0> **darr, size_t size)
 {
     struct <2> *dynarray = (struct <2> *) *darr;
     assert(dynarray != NULL); 
@@ -90,28 +90,28 @@ bool <0>_resize(<0> *darr, size_t size)
     return true;
 }
 
-<1> *<0>_arr(<0> darr)
+<1> *<0>_arr(<0> *darr)
 {
     struct <2> *dynarray = (struct <2> *) darr;
     assert(dynarray != NULL);   
     return dynarray->arr;
 }
 
-<1> <0>_get(<0> darr, size_t index)
+<1> <0>_get(<0> *darr, size_t index)
 {
     struct <2> *dynarray = (struct <2> *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     return dynarray->arr[index];
 }
 
-void <0>_set(<0> darr, size_t index, <1> val)
+void <0>_set(<0> *darr, size_t index, <1> val)
 {
     struct <2> *dynarray = (struct <2> *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     dynarray->arr[index] = val;
 }
 
-bool <0>_adjust_length(<0> *darr, size_t length)
+bool <0>_adjust_length(<0> **darr, size_t length)
 {
     struct <2> *dynarray = (struct <2> *) *darr;
     if(length > dynarray->size)
@@ -126,7 +126,7 @@ bool <0>_adjust_length(<0> *darr, size_t length)
     return true;
 }
 
-bool <0>_insert_array(<0> *darr, size_t start_index, <1> *arr, size_t arr_length)
+bool <0>_insert_array(<0> **darr, size_t start_index, <1> *arr, size_t arr_length)
 {
     struct <2> *dynarray = (struct <2> *) *darr;
     assert(dynarray != NULL && start_index <= dynarray->length);
@@ -148,28 +148,28 @@ bool <0>_insert_array(<0> *darr, size_t start_index, <1> *arr, size_t arr_length
     return true;
 }
 
-bool <0>_append_array(<0> *darr, <1> *arr, size_t arr_length)
+bool <0>_append_array(<0> **darr, <1> *arr, size_t arr_length)
 {
     struct <2> *dynarray = (struct <2> *) *darr;
     assert(dynarray != NULL);
     return <0>_insert_array(darr, dynarray->length, arr, arr_length);     
 }
 
-bool <0>_insert_dynarray(<0> *dest, size_t start_index, <0> src)
+bool <0>_insert_dynarray(<0> **dest, size_t start_index, <0> *src)
 {
     struct <2> *dynarray_src = (struct <2> *) src;
     assert(dynarray_src != NULL);
     return <0>_insert_array(dest, start_index, dynarray_src->arr, dynarray_src->length); 
 }
 
-bool <0>_append_dynarray(<0> *dest, <0> src)
+bool <0>_append_dynarray(<0> **dest, <0> *src)
 {
     struct <2> *dynarray_src = (struct <2> *) src;
     assert(dynarray_src != NULL);
     return <0>_append_array(dest, dynarray_src->arr, dynarray_src->length); 
 }
 
-void <0>_remove(<0> darr, size_t index)
+void <0>_remove(<0> *darr, size_t index)
 {
     struct <2> *dynarray = (struct <2> *) darr;
     assert(dynarray != NULL && index < dynarray->length);
@@ -178,7 +178,7 @@ void <0>_remove(<0> darr, size_t index)
     dynarray->length--;    
 }
 
-void <0>_remove_slice(<0> darr, size_t start, size_t end)
+void <0>_remove_slice(<0> *darr, size_t start, size_t end)
 {
     struct <2> *dynarray = (struct <2> *) darr;
     assert(dynarray != NULL && start < dynarray->length &&
@@ -192,7 +192,7 @@ void <0>_remove_slice(<0> darr, size_t start, size_t end)
     dynarray->length = i;
 }
 
-void <0>_foreach(<0> darr, foreach_fp fp)
+void <0>_foreach(<0> *darr, <0>_foreach_fp fp)
 {
     struct <2> *dynarray = (struct <2> *) darr;
     assert(dynarray != NULL);  

@@ -1,6 +1,6 @@
 CC     = gcc
 CFLAGS = -std=c99 -pedantic -g -Werror -Wall 
-BUILD  = text_line.o
+BUILD  = dynarray_generic.o
 
 .PHONY: all clean 
 
@@ -10,4 +10,4 @@ clean:
 	/bin/rm -f $(BUILD)
 	/bin/rm -f *.o
 
-text_line.o: text_line.h
+dynarray_generic.o: dynarray_generic.h

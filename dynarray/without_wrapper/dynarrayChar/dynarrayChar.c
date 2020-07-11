@@ -12,14 +12,14 @@ struct _DynarrayChar
 };
 
 
-bool DynarrayChar_append(DynarrayChar *darr, char val)
+bool DynarrayChar_append(DynarrayChar **darr, char val)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL);
     return DynarrayChar_insert(darr, val, dynarray->length);
 }
 
-DynarrayChar DynarrayChar_create(size_t length)
+DynarrayChar *DynarrayChar_create(size_t length)
 {
     struct _DynarrayChar *dynarray = malloc(sizeof(struct _DynarrayChar) + sizeof(char) * (length - 1));
     if(dynarray == NULL)
@@ -30,12 +30,12 @@ DynarrayChar DynarrayChar_create(size_t length)
     return dynarray;
 }
 
-void DynarrayChar_destroy(DynarrayChar dynarray)
+void DynarrayChar_destroy(DynarrayChar *dynarray)
 {
     free(dynarray);
 }
 
-bool DynarrayChar_insert(DynarrayChar *darr, char val, size_t index)
+bool DynarrayChar_insert(DynarrayChar **darr, char val, size_t index)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL && index <= dynarray->length);
@@ -60,14 +60,14 @@ bool DynarrayChar_insert(DynarrayChar *darr, char val, size_t index)
     return true;
 }
 
-size_t DynarrayChar_length(DynarrayChar darr)
+size_t DynarrayChar_length(DynarrayChar *darr)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL); 
     return dynarray->length;
 }
 
-size_t DynarrayChar_size(DynarrayChar darr)
+size_t DynarrayChar_size(DynarrayChar *darr)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL); 
@@ -75,7 +75,7 @@ size_t DynarrayChar_size(DynarrayChar darr)
 }
 
 
-bool DynarrayChar_resize(DynarrayChar *darr, size_t size)
+bool DynarrayChar_resize(DynarrayChar **darr, size_t size)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL); 
@@ -90,28 +90,28 @@ bool DynarrayChar_resize(DynarrayChar *darr, size_t size)
     return true;
 }
 
-char *DynarrayChar_arr(DynarrayChar darr)
+char *DynarrayChar_arr(DynarrayChar *darr)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL);   
     return dynarray->arr;
 }
 
-char DynarrayChar_get(DynarrayChar darr, size_t index)
+char DynarrayChar_get(DynarrayChar *darr, size_t index)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     return dynarray->arr[index];
 }
 
-void DynarrayChar_set(DynarrayChar darr, size_t index, char val)
+void DynarrayChar_set(DynarrayChar *darr, size_t index, char val)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     dynarray->arr[index] = val;
 }
 
-bool DynarrayChar_adjust_length(DynarrayChar *darr, size_t length)
+bool DynarrayChar_adjust_length(DynarrayChar **darr, size_t length)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     if(length > dynarray->size)
@@ -126,7 +126,7 @@ bool DynarrayChar_adjust_length(DynarrayChar *darr, size_t length)
     return true;
 }
 
-bool DynarrayChar_insert_array(DynarrayChar *darr, size_t start_index, char *arr, size_t arr_length)
+bool DynarrayChar_insert_array(DynarrayChar **darr, size_t start_index, char *arr, size_t arr_length)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL && start_index <= dynarray->length);
@@ -148,28 +148,28 @@ bool DynarrayChar_insert_array(DynarrayChar *darr, size_t start_index, char *arr
     return true;
 }
 
-bool DynarrayChar_append_array(DynarrayChar *darr, char *arr, size_t arr_length)
+bool DynarrayChar_append_array(DynarrayChar **darr, char *arr, size_t arr_length)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) *darr;
     assert(dynarray != NULL);
     return DynarrayChar_insert_array(darr, dynarray->length, arr, arr_length);     
 }
 
-bool DynarrayChar_insert_dynarray(DynarrayChar *dest, size_t start_index, DynarrayChar src)
+bool DynarrayChar_insert_dynarray(DynarrayChar **dest, size_t start_index, DynarrayChar *src)
 {
     struct _DynarrayChar *dynarray_src = (struct _DynarrayChar *) src;
     assert(dynarray_src != NULL);
     return DynarrayChar_insert_array(dest, start_index, dynarray_src->arr, dynarray_src->length); 
 }
 
-bool DynarrayChar_append_dynarray(DynarrayChar *dest, DynarrayChar src)
+bool DynarrayChar_append_dynarray(DynarrayChar **dest, DynarrayChar *src)
 {
     struct _DynarrayChar *dynarray_src = (struct _DynarrayChar *) src;
     assert(dynarray_src != NULL);
     return DynarrayChar_append_array(dest, dynarray_src->arr, dynarray_src->length); 
 }
 
-void DynarrayChar_remove(DynarrayChar darr, size_t index)
+void DynarrayChar_remove(DynarrayChar *darr, size_t index)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL && index < dynarray->length);
@@ -178,7 +178,7 @@ void DynarrayChar_remove(DynarrayChar darr, size_t index)
     dynarray->length--;    
 }
 
-void DynarrayChar_remove_slice(DynarrayChar darr, size_t start, size_t end)
+void DynarrayChar_remove_slice(DynarrayChar *darr, size_t start, size_t end)
 {
     struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
     assert(dynarray != NULL && start < dynarray->length &&
@@ -190,4 +190,15 @@ void DynarrayChar_remove_slice(DynarrayChar darr, size_t start, size_t end)
         dynarray->arr[i] = dynarray->arr[i + slice_size];
     }
     dynarray->length = i;
+}
+
+void DynarrayChar_foreach(DynarrayChar *darr, DynarrayChar_foreach_fp fp)
+{
+    struct _DynarrayChar *dynarray = (struct _DynarrayChar *) darr;
+    assert(dynarray != NULL);  
+    char *arr = dynarray->arr;
+    for(size_t i = 0; i < dynarray->length; i++)
+    {
+        fp(arr[i]);
+    }
 }

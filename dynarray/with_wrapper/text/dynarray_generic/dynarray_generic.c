@@ -12,14 +12,14 @@ struct _DynarrayGeneric
 };
 
 
-bool DynarrayGeneric_append(DynarrayGeneric *darr, void * val)
+bool DynarrayGeneric_append(DynarrayGeneric **darr, void * val)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) *darr;
     assert(dynarray != NULL);
     return DynarrayGeneric_insert(darr, val, dynarray->length);
 }
 
-DynarrayGeneric DynarrayGeneric_create(size_t length)
+DynarrayGeneric *DynarrayGeneric_create(size_t length)
 {
     struct _DynarrayGeneric *dynarray = malloc(sizeof(struct _DynarrayGeneric) + sizeof(void *) * (length - 1));
     if(dynarray == NULL)
@@ -30,12 +30,12 @@ DynarrayGeneric DynarrayGeneric_create(size_t length)
     return dynarray;
 }
 
-void DynarrayGeneric_destroy(DynarrayGeneric dynarray)
+void DynarrayGeneric_destroy(DynarrayGeneric *dynarray)
 {
     free(dynarray);
 }
 
-bool DynarrayGeneric_insert(DynarrayGeneric *darr, void * val, size_t index)
+bool DynarrayGeneric_insert(DynarrayGeneric **darr, void * val, size_t index)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) *darr;
     assert(dynarray != NULL && index <= dynarray->length);
@@ -60,14 +60,14 @@ bool DynarrayGeneric_insert(DynarrayGeneric *darr, void * val, size_t index)
     return true;
 }
 
-size_t DynarrayGeneric_length(DynarrayGeneric darr)
+size_t DynarrayGeneric_length(DynarrayGeneric *darr)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) darr;
     assert(dynarray != NULL); 
     return dynarray->length;
 }
 
-size_t DynarrayGeneric_size(DynarrayGeneric darr)
+size_t DynarrayGeneric_size(DynarrayGeneric *darr)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) darr;
     assert(dynarray != NULL); 
@@ -75,7 +75,7 @@ size_t DynarrayGeneric_size(DynarrayGeneric darr)
 }
 
 
-bool DynarrayGeneric_resize(DynarrayGeneric *darr, size_t size)
+bool DynarrayGeneric_resize(DynarrayGeneric **darr, size_t size)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) *darr;
     assert(dynarray != NULL); 
@@ -90,28 +90,28 @@ bool DynarrayGeneric_resize(DynarrayGeneric *darr, size_t size)
     return true;
 }
 
-void * *DynarrayGeneric_arr(DynarrayGeneric darr)
+void * *DynarrayGeneric_arr(DynarrayGeneric *darr)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) darr;
     assert(dynarray != NULL);   
     return dynarray->arr;
 }
 
-void * DynarrayGeneric_get(DynarrayGeneric darr, size_t index)
+void * DynarrayGeneric_get(DynarrayGeneric *darr, size_t index)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     return dynarray->arr[index];
 }
 
-void DynarrayGeneric_set(DynarrayGeneric darr, size_t index, void * val)
+void DynarrayGeneric_set(DynarrayGeneric *darr, size_t index, void * val)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) darr;
     assert(dynarray != NULL && index < dynarray->length);   
     dynarray->arr[index] = val;
 }
 
-bool DynarrayGeneric_adjust_length(DynarrayGeneric *darr, size_t length)
+bool DynarrayGeneric_adjust_length(DynarrayGeneric **darr, size_t length)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) *darr;
     if(length > dynarray->size)
@@ -126,7 +126,7 @@ bool DynarrayGeneric_adjust_length(DynarrayGeneric *darr, size_t length)
     return true;
 }
 
-bool DynarrayGeneric_insert_array(DynarrayGeneric *darr, size_t start_index, void * *arr, size_t arr_length)
+bool DynarrayGeneric_insert_array(DynarrayGeneric **darr, size_t start_index, void * *arr, size_t arr_length)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) *darr;
     assert(dynarray != NULL && start_index <= dynarray->length);
@@ -148,28 +148,28 @@ bool DynarrayGeneric_insert_array(DynarrayGeneric *darr, size_t start_index, voi
     return true;
 }
 
-bool DynarrayGeneric_append_array(DynarrayGeneric *darr, void * *arr, size_t arr_length)
+bool DynarrayGeneric_append_array(DynarrayGeneric **darr, void * *arr, size_t arr_length)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) *darr;
     assert(dynarray != NULL);
     return DynarrayGeneric_insert_array(darr, dynarray->length, arr, arr_length);     
 }
 
-bool DynarrayGeneric_insert_dynarray(DynarrayGeneric *dest, size_t start_index, DynarrayGeneric src)
+bool DynarrayGeneric_insert_dynarray(DynarrayGeneric **dest, size_t start_index, DynarrayGeneric *src)
 {
     struct _DynarrayGeneric *dynarray_src = (struct _DynarrayGeneric *) src;
     assert(dynarray_src != NULL);
     return DynarrayGeneric_insert_array(dest, start_index, dynarray_src->arr, dynarray_src->length); 
 }
 
-bool DynarrayGeneric_append_dynarray(DynarrayGeneric *dest, DynarrayGeneric src)
+bool DynarrayGeneric_append_dynarray(DynarrayGeneric **dest, DynarrayGeneric *src)
 {
     struct _DynarrayGeneric *dynarray_src = (struct _DynarrayGeneric *) src;
     assert(dynarray_src != NULL);
     return DynarrayGeneric_append_array(dest, dynarray_src->arr, dynarray_src->length); 
 }
 
-void DynarrayGeneric_remove(DynarrayGeneric darr, size_t index)
+void DynarrayGeneric_remove(DynarrayGeneric *darr, size_t index)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) darr;
     assert(dynarray != NULL && index < dynarray->length);
@@ -178,7 +178,7 @@ void DynarrayGeneric_remove(DynarrayGeneric darr, size_t index)
     dynarray->length--;    
 }
 
-void DynarrayGeneric_remove_slice(DynarrayGeneric darr, size_t start, size_t end)
+void DynarrayGeneric_remove_slice(DynarrayGeneric *darr, size_t start, size_t end)
 {
     struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) darr;
     assert(dynarray != NULL && start < dynarray->length &&
@@ -190,4 +190,15 @@ void DynarrayGeneric_remove_slice(DynarrayGeneric darr, size_t start, size_t end
         dynarray->arr[i] = dynarray->arr[i + slice_size];
     }
     dynarray->length = i;
+}
+
+void DynarrayGeneric_foreach(DynarrayGeneric *darr, DynarrayGeneric_foreach_fp fp)
+{
+    struct _DynarrayGeneric *dynarray = (struct _DynarrayGeneric *) darr;
+    assert(dynarray != NULL);  
+    void * *arr = dynarray->arr;
+    for(size_t i = 0; i < dynarray->length; i++)
+    {
+        fp(arr[i]);
+    }
 }

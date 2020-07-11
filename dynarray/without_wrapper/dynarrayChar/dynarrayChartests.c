@@ -2,6 +2,8 @@
 #include "test_utils.h"
 #include "dynarrayChar.h"
 
+static void next_letter(char c);
+
 bool arr_equals(char *a1, char *a2, size_t l1, size_t l2)
 {
     if(l1 != l2)
@@ -16,7 +18,7 @@ bool arr_equals(char *a1, char *a2, size_t l1, size_t l2)
 
 int main()
 {
-    DynarrayChar dynarr = DynarrayChar_create(5);
+    DynarrayChar *dynarr = DynarrayChar_create(5);
     DynarrayChar_set(dynarr, 0, 'a');
     DynarrayChar_set(dynarr, 1, 'b');
     DynarrayChar_set(dynarr, 2, 'c');
@@ -61,7 +63,7 @@ int main()
     DynarrayChar_insert_array(&dynarr, DynarrayChar_length(dynarr), "123", 3); 
     testbool(arr_equals(DynarrayChar_arr(dynarr), "helAloyab123", DynarrayChar_length(dynarr), 12), "adding to the end");
 
-    DynarrayChar other = DynarrayChar_create(4);
+    DynarrayChar *other = DynarrayChar_create(4);
     DynarrayChar_set(other, 0, 'z'); 
     DynarrayChar_set(other, 1, 'y'); 
     DynarrayChar_set(other, 2, 'x'); 
@@ -90,10 +92,16 @@ int main()
     DynarrayChar_remove_slice(other, 0, DynarrayChar_length(other));
     testbool(arr_equals(DynarrayChar_arr(other), "", DynarrayChar_length(other), 0), "total removal");
    
-
+    DynarrayChar_foreach( dynarr, next_letter );
+    puts("\t \"helAloyab123\" should have been printed!");
     // TODO test dynarray inserting functions    
     DynarrayChar_destroy(other);
     DynarrayChar_destroy(dynarr);
     return 0;
 }
 
+
+static void next_letter(char c)
+{
+    putchar(c);
+}
