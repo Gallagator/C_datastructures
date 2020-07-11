@@ -46,4 +46,7 @@ void <0>_remove(<0> *darr, size_t index);
 void <0>_remove_slice(<0> *darr, size_t start, size_t end);
 // executes fp on each element up to the length of the dynarray
 void <0>_foreach(<0> *darr, <2>_foreach_fp fp);
+// runs destroy on the all data being held
+void <0>_destroy_full(<0> *darr);
+
 #endif

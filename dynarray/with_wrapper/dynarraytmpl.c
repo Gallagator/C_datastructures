@@ -75,3 +75,9 @@ void <0>_foreach(<0> *darr, <2>_foreach_fp fp)
     <2>_foreach( (<2> *) darr, fp);
 }
 
+void <0>_destroy_full(<0> *darr)
+{
+    <0>_foreach( (<2> *) darr, <1>_destroy);
+    <0>_destroy(darr);
+}
+
