@@ -104,6 +104,13 @@ bool <0>_resize(<0> **darr, size_t size)
     return dynarray->arr[index];
 }
 
+<1> *<0>_get_arr_reference(<0> *darr, size_t index)
+{
+    struct <2> *dynarray = (struct <2> *) darr;
+    assert(dynarray != NULL && index < dynarray->length);   
+    return &dynarray->arr[index];  
+}
+
 void <0>_set(<0> *darr, size_t index, <1> val)
 {
     struct <2> *dynarray = (struct <2> *) darr;

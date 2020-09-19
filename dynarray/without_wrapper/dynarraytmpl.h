@@ -28,6 +28,8 @@ bool <0>_resize(<0> **darr, size_t size);
 <1> *<0>_arr(<0> *darr);
 // gets a value in the array at a particular index
 <1> <0>_get(<0> *darr, size_t index);
+// gets the reference of the data in the array
+<1> *<0>_get_arr_reference(<0> *darr, size_t index);
 // sets a value in the array at a particular index
 void <0>_set(<0> *darr, size_t index, <1> val);
 // changes length of the array. true on success

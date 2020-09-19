@@ -28,6 +28,8 @@ bool DynarrayChar_resize(DynarrayChar **darr, size_t size);
 char *DynarrayChar_arr(DynarrayChar *darr);
 // gets a value in the array at a particular index
 char DynarrayChar_get(DynarrayChar *darr, size_t index);
+// gets the reference of the data in the array
+char *DynarrayChar_get_arr_reference(DynarrayChar *darr, size_t index);
 // sets a value in the array at a particular index
 void DynarrayChar_set(DynarrayChar *darr, size_t index, char val);
 // changes length of the array. true on success

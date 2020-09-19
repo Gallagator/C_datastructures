@@ -37,6 +37,12 @@ bool <0>_resize(<0> **darr, size_t size)
 {
     return (<1>) <2>_get( (<2> *) darr, index);
 }
+
+<1> *<0>_get_arr_reference(<0> *darr, size_t index)
+{
+    return (<1> *) <2>_get_arr_reference((<2> *) darr, index);
+}
+
 void <0>_set(<0> *darr, size_t index, <1> val)
 {
     <2>_set( (<2> *) darr, index, (void *) val);

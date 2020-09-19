@@ -94,7 +94,11 @@ int main()
    
     DynarrayChar_foreach( dynarr, next_letter );
     puts("\t \"helAloyab123\" should have been printed!");
-    // TODO test dynarray inserting functions    
+
+    char *c = DynarrayChar_get_arr_reference(dynarr, 2);
+    *c = 'C';
+    testbool(arr_equals(DynarrayChar_arr(dynarr), "heCAloyab123", DynarrayChar_length(dynarr), 12), "DynarrayChar_get_arr_reference works");
+
     DynarrayChar_destroy(other);
     DynarrayChar_destroy(dynarr);
     return 0;
