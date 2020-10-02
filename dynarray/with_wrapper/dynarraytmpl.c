@@ -68,9 +68,9 @@ bool <0>_append_dynarray(<0> **dest, <0> *src)
 {
     return <2>_append_dynarray( (<2> **) dest, (<2> *) src);
 }
-void <0>_remove(<0> *darr, size_t index)
+<1> <0>_remove(<0> *darr, size_t index)
 {
-    <2>_remove( (<2> *) darr, index);
+    return <2>_remove( (<2> *) darr, index);
 }
 void <0>_remove_slice(<0> *darr, size_t start, size_t end)
 {

@@ -176,13 +176,15 @@ bool <0>_append_dynarray(<0> **dest, <0> *src)
     return <0>_append_array(dest, dynarray_src->arr, dynarray_src->length); 
 }
 
-void <0>_remove(<0> *darr, size_t index)
+<1> <0>_remove(<0> *darr, size_t index)
 {
     struct <2> *dynarray = (struct <2> *) darr;
     assert(dynarray != NULL && index < dynarray->length);
+    <1> val = dynarray->arr[index];
     for(size_t i = index; i < dynarray->length - 1; i++)
         dynarray->arr[i] = dynarray->arr[i + 1];
     dynarray->length--;    
+    return val;
 }
 
 void <0>_remove_slice(<0> *darr, size_t start, size_t end)

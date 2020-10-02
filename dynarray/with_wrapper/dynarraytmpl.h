@@ -43,7 +43,7 @@ bool <0>_insert_dynarray(<0> **dest, size_t start_index, <0> *src);
 // appends a dynarray -tests not done
 bool <0>_append_dynarray(<0> **dest, <0> *src);
 // removes an element from dynarray
-void <0>_remove(<0> *darr, size_t index);
+<1> <0>_remove(<0> *darr, size_t index);
 // removes slice of array. it removes elements from start up to but not including end 
 void <0>_remove_slice(<0> *darr, size_t start, size_t end);
 // executes fp on each element up to the length of the dynarray
